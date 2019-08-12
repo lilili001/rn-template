@@ -1,25 +1,24 @@
 import React from 'react';
-import {  HashRouter as Router, Route, Link,browserHistory  } from "react-router-dom";
+import {  HashRouter as Router, Route, Switch, Link,browserHistory  } from "react-router-dom";
 import { Provider } from "react-redux"
+import About from './pages/about'
+import Index from './pages/inbox'
+import Users from './pages/message'
+import notFound from './pages/notFound'
 
-const Index = (props)=>{
+const App = (props) => {
     return (
-        <h1>Index</h1>
-    )
-};
-const About = ()=> <h2>About</h2>
-const Users = ()=> <h2>Users</h2>
-const App = () => {
-    return (
-        <Router >
+        <Router>
             <div>
                 <Link to="/">Home</Link><br/>
-                <Link to="/about/">About</Link><br/>
-                <Link to="/users/">Users</Link>
-
-                <Route path="/" exact component={Index} />
-                <Route path="/about/" component={About} />
-                <Route path="/users/" component={Users} />
+                <Link to="/about">About</Link><br/>
+                <Link to="/users">Users</Link>
+                <Switch>
+                    <Route path="/" exact component={Index} />
+                    <Route path="/about" component={About} />
+                    <Route path="/users" component={Users} />
+                    <Route component={notFound} />
+                </Switch>
             </div>
         </Router>
     );
