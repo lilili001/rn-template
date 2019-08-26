@@ -4,6 +4,7 @@ const path = require('path');
 const Webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = smart(base,{
     mode:'development',
     devtool:'source-map',
@@ -47,6 +48,9 @@ module.exports = smart(base,{
         new FriendlyErrorsPlugin({
 
         }) ,
+         new MiniCssExtractPlugin({
+            filename: 'css/[name]-[hash:8].css'
+        }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html',

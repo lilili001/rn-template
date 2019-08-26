@@ -3,6 +3,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const utils = require('./utils')
 
 // 抽离style为link的css
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -96,7 +97,8 @@ module.exports = {
                     loader:'url-loader',
                     options:{
                         limit:200*1024,// 超过这个用　file-loader 生成真正的图片,否则用url-loader
-                        outputPath:'img/',
+                        //outputPath:'img/',
+                        name: utils.assetsPath('img/[name].[hash:7].[ext]')
                         //publicPath:"http://xxx" //单独给图片加publicPath
                     }
                 }
@@ -130,9 +132,7 @@ module.exports = {
         new Webpack.DefinePlugin({
             DEV:"'dev'" //在全局都可以使用DEV这个环境变量了
         }),
-        new MiniCssExtractPlugin({
-            filename: 'css/[name]-[hash:8].css'
-        }),
+
         new Webpack.ProvidePlugin({
             $:'jquery', //在每个模块中都注入 $,
             jQuery: "jquery",

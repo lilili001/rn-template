@@ -3,7 +3,9 @@ const base = require('./webpack.base.js');
 const path = require('path');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const utils = require('./utils')
 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const Webpack = require('webpack');
@@ -16,6 +18,11 @@ module.exports = smart(base,{
     //     aggregateTimeout: 500, //500ms内只打包一次 防抖
     //     ignored:/node_modules/
     // },
+    output: {
+        path: path.resolve(__dirname, '../dist'),
+        filename: utils.assetsPath('js/[name].[chunkhash].js'),
+        chunkFilename: utils.assetsPath('js/[id].[chunkhash].js'),
+    },
     //用于生产的
     optimization: {
         splitChunks:{
@@ -53,6 +60,10 @@ module.exports = smart(base,{
         //环境定义
         new Webpack.DefinePlugin({
             DEV:"'production'" //在全局都可以使用DEV这个环境变量了
+        }),
+        new MiniCssExtractPlugin({
+            filename: utils.assetsPath('css/[name]-[hash:8].css'),
+            allChunks: true,
         }),
         new HtmlWebpackPlugin({
             title: 'Output Management',
